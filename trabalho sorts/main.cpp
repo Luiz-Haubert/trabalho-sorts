@@ -13,118 +13,214 @@
 
 using namespace std;
 
-/*
-    executa os testes de um algoritmo
-    e exibe os resultados formatados
-*/
-void exibirResultados(const string& nome, void (*algoritmo)(vector<int>&)) { 
-
-    ResultadoTeste resultado =
-        executarTestes(
-            algoritmo,
-            1000,
-            100
-        );
-
-    cout << "\n========================================\n";
-    cout << nome << endl;
-    cout << "========================================\n";
-    
-    //deixa tudo em ms pra ver se é melhor
-    double mediaMs =
-        resultado.media / 1000000.0;
-    double desvioMs =
-        resultado.desvioPadrao / 1000000.0;
-    double melhorMs =
-        resultado.melhorTempo/ 1000000.0;
-    double piorMs =
-        resultado.piorTempo / 1000000.0;
-
-    cout << "media:          "
-        << fixed << setprecision(2)
-        << mediaMs
-        << " ms\n";
-
-    cout << "desvio padrao:  "
-        << desvioMs
-        << " ms\n";
-
-    cout << "melhor tempo:   "
-        << melhorMs
-        << " ms\n";
-
-    cout << "pior tempo:     "
-        << piorMs
-        << " ms\n";
-
-    cout << "\nprimeiros elementos do melhor vetor:\n";
-
-
-    for (int i = 0;
-        i < min(20, (int)resultado.melhorVetor.size());
-        i++) {
-
-        cout << resultado.melhorVetor[i] << " ";
-    }
-
-    cout << "\n";
-
-    cout << "\nprimeiros elementos do pior vetor:\n";
-
-    for (int i = 0;
-        i < min(20, (int)resultado.piorVetor.size());
-        i++) {
-
-        cout << resultado.piorVetor[i] << " ";
-    }
-
-    cout << "\n";
-}
-
 int main() {
 
-    cout << "========================================\n";
-    cout << "teste dos algoritmos de ordenacao\n";
-    cout << "========================================\n";
+    // bubble sort
 
-    exibirResultados(
-        "bubble sort",
-        bubbleSort
-    );
+    cout << "\n===== bubble sort =====\n";
 
-    exibirResultados(
-        "insertion sort",
-        insertionSort
-    );
+    cout << "caso medio: "
+        << executarTestes(
+            bubbleSort,
+            1000,
+            100
+        ).media
+        << " ns\n";
 
-    exibirResultados(
-        "selection sort",
-        selectionSort
-    );
+    cout << "melhor caso (ordenado): "
+        << calcularMediaTempoVetor(
+            bubbleSort,
+            gerarArrayOrdenado(1000),
+            100
+        )
+        << " ns\n";
 
-    exibirResultados(
-        "heap sort",
-        heapSort
-    );
+    cout << "pior caso (invertido): "
+        << calcularMediaTempoVetor(
+            bubbleSort,
+            gerarArrayInvertido(1000),
+            100
+        )
+        << " ns\n";
 
-    exibirResultados(
-        "shell sort",
-        shellSort
-    );
 
-    exibirResultados(
-        "merge sort",
-        mergeSort
-    );
+    // insertion sort
 
-    exibirResultados(
-        "quick sort",
-        quickSort
-    );
+    cout << "\n===== insertion sort =====\n";
 
-    cout << "\n========================================\n";
-    cout << "fim dos testes\n";
-    cout << "========================================\n";
+    cout << "caso medio: "
+        << executarTestes(
+            insertionSort,
+            1000,
+            100
+        ).media
+        << " ns\n";
 
+    cout << "melhor caso (ordenado): "
+        << calcularMediaTempoVetor(
+            insertionSort,
+            gerarArrayOrdenado(1000),
+            100
+        )
+        << " ns\n";
+
+    cout << "pior caso (invertido): "
+        << calcularMediaTempoVetor(
+            insertionSort,
+            gerarArrayInvertido(1000),
+            100
+        )
+        << " ns\n";
+
+
+    // selection sort
+
+    cout << "\n===== selection sort =====\n";
+
+    cout << "caso medio: "
+        << executarTestes(
+            selectionSort,
+            1000,
+            100
+        ).media
+        << " ns\n";
+
+    cout << "melhor caso (ordenado): "
+        << calcularMediaTempoVetor(
+            selectionSort,
+            gerarArrayOrdenado(1000),
+            100
+        )
+        << " ns\n";
+
+    cout << "pior caso (invertido): "
+        << calcularMediaTempoVetor(
+            selectionSort,
+            gerarArrayInvertido(1000),
+            100
+        )
+        << " ns\n";
+
+
+    // heap sort
+
+    cout << "\n===== heap sort =====\n";
+
+    cout << "caso medio: "
+        << executarTestes(
+            heapSort,
+            1000,
+            100
+        ).media
+        << " ns\n";
+
+    cout << "caso ordenado: "
+        << calcularMediaTempoVetor(
+            heapSort,
+            gerarArrayOrdenado(1000),
+            100
+        )
+        << " ns\n";
+
+    cout << "caso invertido: "
+        << calcularMediaTempoVetor(
+            heapSort,
+            gerarArrayInvertido(1000),
+            100
+        )
+        << " ns\n";
+
+
+    // shell sort
+
+    cout << "\n===== shell sort =====\n";
+
+    cout << "caso medio: "
+        << executarTestes(
+            shellSort,
+            1000,
+            100
+        ).media
+        << " ns\n";
+
+    cout << "melhor caso (quase ordenado): "
+        << calcularMediaTempoVetor(
+            shellSort,
+            gerarArrayQuaseOrdenado(
+                1000,
+                10
+            ),
+            100
+        )
+        << " ns\n";
+
+    cout << "pior caso (invertido): "
+        << calcularMediaTempoVetor(
+            shellSort,
+            gerarArrayInvertido(1000),
+            100
+        )
+        << " ns\n";
+
+
+    // merge sort
+
+    cout << "\n===== merge sort =====\n";
+
+    cout << "caso medio: "
+        << executarTestes(
+            mergeSort,
+            1000,
+            100
+        ).media
+        << " ns\n";
+
+    cout << "caso ordenado: "
+        << calcularMediaTempoVetor(
+            mergeSort,
+            gerarArrayOrdenado(1000),
+            100
+        )
+        << " ns\n";
+
+    cout << "caso invertido: "
+        << calcularMediaTempoVetor(
+            mergeSort,
+            gerarArrayInvertido(1000),
+            100
+        )
+        << " ns\n";
+
+
+    // quick sort
+
+    cout << "\n===== quick sort =====\n";
+
+    cout << "caso medio: "
+        << executarTestes(
+            quickSort,
+            1000,
+            100
+        ).media
+        << " ns\n";
+
+    cout << "melhor caso (quase ordenado): "
+        << calcularMediaTempoVetor(
+            quickSort,
+            gerarArrayQuaseOrdenado(
+                1000,
+                50
+            ),
+            100
+        )
+        << " ns\n";
+
+    cout << "pior caso (ordenado): "
+        << calcularMediaTempoVetor(
+            quickSort,
+            gerarArrayOrdenado(1000),
+            100
+        )
+        << " ns\n";
     return 0;
 }

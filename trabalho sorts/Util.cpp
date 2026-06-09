@@ -141,6 +141,86 @@ double calcularDesvioPadrao(
     );
 }
 
+vector<int> gerarArrayOrdenado(int tamanho) {
+
+    vector<int> vetor(tamanho);
+
+    for (int i = 0; i < tamanho; i++) {
+
+        vetor[i] = i + 1;
+    }
+
+    return vetor;
+}
+
+
+vector<int> gerarArrayInvertido(int tamanho) {
+
+    vector<int> vetor(tamanho);
+
+    for (int i = 0; i < tamanho; i++) {
+
+        vetor[i] = tamanho - i;
+    }
+
+    return vetor;
+}
+
+
+vector<int> gerarArrayQuaseOrdenado(
+    int tamanho,
+    int quantidadeTrocas
+) {
+
+    vector<int> vetor =
+        gerarArrayOrdenado(tamanho);
+
+    random_device rd;
+    mt19937 gen(rd());
+
+    uniform_int_distribution<> dist(
+        0,
+        tamanho - 1
+    );
+
+    for (int i = 0; i < quantidadeTrocas; i++) {
+
+        int a = dist(gen);
+        int b = dist(gen);
+
+        swap(vetor[a], vetor[b]);
+    }
+
+    return vetor;
+}
+
+/*
+    executa varias vezes um mesmo vetor
+
+    retorna o tempo medio
+*/
+double calcularMediaTempoVetor(
+    void (*algoritmo)(vector<int>&),
+    vector<int> vetor,
+    int quantidadeTestes
+) {
+
+    long long somaTempos = 0;
+
+    for (int i = 0; i < quantidadeTestes; i++) {
+
+        somaTempos +=
+            medirTempo(
+                algoritmo,
+                vetor
+            );
+    }
+
+    return
+        (double)somaTempos
+        / quantidadeTestes;
+}
+
 ResultadoTeste executarTestes(
     void (*algoritmo)(vector<int>&),
     int tamanhoVetor,

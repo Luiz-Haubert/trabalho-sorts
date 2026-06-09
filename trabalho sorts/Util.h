@@ -29,6 +29,21 @@ double calcularDesvioPadrao(
     int quantidadeTestes
 );
 
+std::vector<int> gerarArrayOrdenado(int tamanho);
+
+std::vector<int> gerarArrayInvertido(int tamanho);
+
+std::vector<int> gerarArrayQuaseOrdenado(
+    int tamanho,
+    int quantidadeTrocas
+);
+
+double calcularMediaTempoVetor(
+    void (*algoritmo)(std::vector<int>&),
+    std::vector<int> vetor,
+    int quantidadeTestes
+);
+
 struct ResultadoTeste {
 
     double media;
