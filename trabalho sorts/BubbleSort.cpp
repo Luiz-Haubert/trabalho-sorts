@@ -46,7 +46,8 @@ void bubbleSort(vector<int>& vetor) {
         for (int j = 0; j < n - i - 1; j++) {
 
             // verifica se os elementos estao fora de ordem
-            if (vetor[j] > vetor[j + 1]) {
+			if (vetor[j] > vetor[j + 1]) { // se o elemento da esquerda for maior que o da direita troca os elementos no pior caso,
+                                           // ou seja, quando o vetor esta em ordem inversa
 
                 // realiza a troca para aproximar o vetor da ordenacao
                 swap(vetor[j], vetor[j + 1]);
@@ -56,7 +57,7 @@ void bubbleSort(vector<int>& vetor) {
         }
 
         // se nenhuma troca aconteceu significa que
-        // o vetor ja esta completamente ordenado
+		// o vetor ja esta completamente ordenado - melhor caso atingido
         if (!trocou)
             break;
     }

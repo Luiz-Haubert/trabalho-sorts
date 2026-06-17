@@ -12,17 +12,108 @@
 #include "QuickSort.h"
 
 using namespace std;
+/*
+    CONSTROI UM VETOR QUE PRODUZ
+    PARTICOES BALANCEADAS PARA O
+    QUICK SORT COM PIVO NO FINAL
+*/
+void construirCasoIdeal(
+    vector<int>& vetor,
+    int inicio,
+    int fim,
+    int& valorAtual
+) {
 
+    if (inicio > fim) {
+
+        return;
+    }
+
+    int meio = inicio + (fim - inicio) / 2;
+
+    construirCasoIdeal(
+        vetor,
+        inicio,
+        meio - 1,
+        valorAtual
+    );
+
+    construirCasoIdeal(
+        vetor,
+        meio + 1,
+        fim,
+        valorAtual
+    );
+
+    vetor[fim] = valorAtual;
+
+    valorAtual++;
+}
+
+/*
+    GERA UM VETOR PARA O MELHOR CASO
+    DO QUICK SORT COM PIVO NO FINAL
+*/
+vector<int> gerarArrayIdealQuick(
+    int tamanho
+) {
+
+    vector<int> vetor(tamanho);
+
+    int valorAtual = 1;
+
+    construirCasoIdeal(
+        vetor,
+        0,
+        tamanho - 1,
+        valorAtual
+    );
+
+    return vetor;
+}
 int main() {
 
-    // bubble sort
+    cout << "\n===== quick sort =====\n";
+
+    cout << "caso medio: "
+        << executarTestes(
+            quickSort,
+            1000,
+            100
+        ).media
+        << " ns\n";
+
+    cout << "melhor caso (particoes balanceadas): "
+        << calcularMediaTempoVetor(
+            quickSort,
+            gerarArrayIdealQuick(1000),
+            100
+        )
+        << " ns\n";
+
+    cout << "pior caso (ordenado): "
+        << calcularMediaTempoVetor(
+            quickSort,
+            gerarArrayOrdenado(1000),
+            100
+        )
+        << " ns\n";
+
+    vector<int> vetor = gerarArrayIdealQuick(15);
+
+    for (int x : vetor) {
+
+        cout << x << " ";
+    }
+
+    /*bubble sort
 
     cout << "\n===== bubble sort =====\n";
 
     cout << "caso medio: "
         << executarTestes(
             bubbleSort,
-            1000,
+            10000,
             100
         ).media
         << " ns\n";
@@ -30,7 +121,7 @@ int main() {
     cout << "melhor caso (ordenado): "
         << calcularMediaTempoVetor(
             bubbleSort,
-            gerarArrayOrdenado(1000),
+            gerarArrayOrdenado(10000),
             100
         )
         << " ns\n";
@@ -38,7 +129,7 @@ int main() {
     cout << "pior caso (invertido): "
         << calcularMediaTempoVetor(
             bubbleSort,
-            gerarArrayInvertido(1000),
+            gerarArrayInvertido(10000),
             100
         )
         << " ns\n";
@@ -51,7 +142,7 @@ int main() {
     cout << "caso medio: "
         << executarTestes(
             insertionSort,
-            1000,
+            10000,
             100
         ).media
         << " ns\n";
@@ -59,7 +150,7 @@ int main() {
     cout << "melhor caso (ordenado): "
         << calcularMediaTempoVetor(
             insertionSort,
-            gerarArrayOrdenado(1000),
+            gerarArrayOrdenado(10000),
             100
         )
         << " ns\n";
@@ -67,7 +158,7 @@ int main() {
     cout << "pior caso (invertido): "
         << calcularMediaTempoVetor(
             insertionSort,
-            gerarArrayInvertido(1000),
+            gerarArrayInvertido(10000),
             100
         )
         << " ns\n";
@@ -80,7 +171,7 @@ int main() {
     cout << "caso medio: "
         << executarTestes(
             selectionSort,
-            1000,
+            10000,
             100
         ).media
         << " ns\n";
@@ -88,7 +179,7 @@ int main() {
     cout << "melhor caso (ordenado): "
         << calcularMediaTempoVetor(
             selectionSort,
-            gerarArrayOrdenado(1000),
+            gerarArrayOrdenado(10000),
             100
         )
         << " ns\n";
@@ -96,7 +187,7 @@ int main() {
     cout << "pior caso (invertido): "
         << calcularMediaTempoVetor(
             selectionSort,
-            gerarArrayInvertido(1000),
+            gerarArrayInvertido(10000),
             100
         )
         << " ns\n";
@@ -109,7 +200,7 @@ int main() {
     cout << "caso medio: "
         << executarTestes(
             heapSort,
-            1000,
+            10000,
             100
         ).media
         << " ns\n";
@@ -117,7 +208,7 @@ int main() {
     cout << "caso ordenado: "
         << calcularMediaTempoVetor(
             heapSort,
-            gerarArrayOrdenado(1000),
+            gerarArrayOrdenado(10000),
             100
         )
         << " ns\n";
@@ -125,7 +216,7 @@ int main() {
     cout << "caso invertido: "
         << calcularMediaTempoVetor(
             heapSort,
-            gerarArrayInvertido(1000),
+            gerarArrayInvertido(10000),
             100
         )
         << " ns\n";
@@ -138,7 +229,7 @@ int main() {
     cout << "caso medio: "
         << executarTestes(
             shellSort,
-            1000,
+            10000,
             100
         ).media
         << " ns\n";
@@ -147,7 +238,7 @@ int main() {
         << calcularMediaTempoVetor(
             shellSort,
             gerarArrayQuaseOrdenado(
-                1000,
+                10000,
                 10
             ),
             100
@@ -157,7 +248,7 @@ int main() {
     cout << "pior caso (invertido): "
         << calcularMediaTempoVetor(
             shellSort,
-            gerarArrayInvertido(1000),
+            gerarArrayInvertido(10000),
             100
         )
         << " ns\n";
@@ -170,7 +261,7 @@ int main() {
     cout << "caso medio: "
         << executarTestes(
             mergeSort,
-            1000,
+            10000,
             100
         ).media
         << " ns\n";
@@ -178,7 +269,7 @@ int main() {
     cout << "caso ordenado: "
         << calcularMediaTempoVetor(
             mergeSort,
-            gerarArrayOrdenado(1000),
+            gerarArrayOrdenado(10000),
             100
         )
         << " ns\n";
@@ -186,7 +277,7 @@ int main() {
     cout << "caso invertido: "
         << calcularMediaTempoVetor(
             mergeSort,
-            gerarArrayInvertido(1000),
+            gerarArrayInvertido(10000),
             100
         )
         << " ns\n";
@@ -199,7 +290,7 @@ int main() {
     cout << "caso medio: "
         << executarTestes(
             quickSort,
-            1000,
+            10000,
             100
         ).media
         << " ns\n";
@@ -208,7 +299,7 @@ int main() {
         << calcularMediaTempoVetor(
             quickSort,
             gerarArrayQuaseOrdenado(
-                1000,
+                10000,
                 50
             ),
             100
@@ -218,9 +309,9 @@ int main() {
     cout << "pior caso (ordenado): "
         << calcularMediaTempoVetor(
             quickSort,
-            gerarArrayOrdenado(1000),
+            gerarArrayOrdenado(10000),
             100
         )
-        << " ns\n";
+        << " ns\n";*/
     return 0;
 }

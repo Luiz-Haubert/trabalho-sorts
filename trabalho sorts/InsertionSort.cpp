@@ -47,7 +47,7 @@ void insertionSort(vector<int>& vetor) {
 
         isso cria um espaco para inserir
         a chave na posicao correta*/
-        while (j >= 0 && vetor[j] > chave) {
+		while (j >= 0 && vetor[j] > chave) { //pior e melhor caso, quando o vetor esta em ordem inversa ou ja ordenado, respectivamente
 
             vetor[j + 1] = vetor[j];
 
